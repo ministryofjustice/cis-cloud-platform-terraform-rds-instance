@@ -288,7 +288,7 @@ resource "aws_db_instance" "rds" {
     create = "2h"
     update = "2h"
     delete = "2h"
-  }https://github.com/ministryofjustice/cis-cloud-platform-terraform-rds-instance/blob/main/main.tf
+  }
 
   tags = merge(local.default_tags, local.tag_for_auto_shutdown)
 
