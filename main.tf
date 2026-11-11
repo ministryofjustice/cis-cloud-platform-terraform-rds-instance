@@ -295,7 +295,8 @@ resource "aws_db_instance" "rds" {
   lifecycle {
 
     ignore_changes = [
-        username
+        username,
+        kms_key_id
     ]
 
     # precondition {
