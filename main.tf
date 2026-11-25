@@ -370,7 +370,7 @@ resource "aws_db_snapshot_copy" "rds_migration_snapshot" {
   count                         = var.is_migration ? 1 : 0
   source_db_snapshot_identifier = var.snapshot_identifier
   target_db_snapshot_identifier = "${local.identifier}-migration-snapshot"
-  kms_key_id                    = aws_kms_key.kms[0].arn
+  kms_key_id                    = var.kms_key_id
   tags                          = local.default_tags
 }
 
