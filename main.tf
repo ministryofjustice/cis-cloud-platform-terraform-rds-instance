@@ -184,18 +184,18 @@ resource "random_password" "password" {
 #########################
 # Create encryption key #
 #########################
-resource "aws_kms_key" "kms" {
-  count       = var.replicate_source_db != null ? 0 : 1
-  description = local.identifier
+# resource "aws_kms_key" "kms" {
+#   count       = var.replicate_source_db != null ? 0 : 1
+#   description = local.identifier
 
-  tags = local.default_tags
-}
+#   tags = local.default_tags
+# }
 
-resource "aws_kms_alias" "alias" {
-  count         = var.replicate_source_db != null ? 0 : 1
-  name          = "alias/${local.identifier}"
-  target_key_id = aws_kms_key.kms[0].key_id
-}
+# resource "aws_kms_alias" "alias" {
+#   count         = var.replicate_source_db != null ? 0 : 1
+#   name          = "alias/${local.identifier}"
+#   target_key_id = aws_kms_key.kms[0].key_id
+# }
 
 ########################
 # Create subnet groups #
@@ -262,7 +262,7 @@ resource "aws_db_instance" "rds" {
   storage_encrypted               = can(regex("sqlserver-ex", var.db_engine)) ? false : true
   db_subnet_group_name            = var.replicate_source_db != null ? null : aws_db_subnet_group.db_subnet[0].name
   vpc_security_group_ids          = local.vpc_security_group_ids
-  kms_key_id                      = (var.replicate_source_db != null) || (can(regex("sqlserver-ex", var.db_engine))) ? null : aws_kms_key.kms[0].arn
+  kms_key_id                      = var.kms_key_id
   multi_az                        = can(regex("sqlserver-web|sqlserver-ex", var.db_engine)) ? false : true
   copy_tags_to_snapshot           = true
   enabled_cloudwatch_logs_exports = local.log_exports

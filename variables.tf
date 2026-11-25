@@ -264,3 +264,8 @@ variable "is_migration" {
   type        = bool
   default     = false
 }
+
+variable "kms_key_id" {
+  description = "The KMS key ID to use for encrypting the RDS instance"
+  type        = string
+}
